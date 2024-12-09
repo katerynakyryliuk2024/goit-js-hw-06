@@ -1,48 +1,30 @@
-class User {
-  email;
-
-  constructor(email) {
-    this.email = email;
+class StringBuilder {
+  #value;
+  constructor(initialValue) {
+    this.#value = initialValue;
   }
-
-  get email() {
-    return this.email;
+  getValue() {
+    return this.#value;
   }
-
-  set email(newEmail) {
-    this.email = newEmail;
+  padEnd(str) {
+    return `${this.#value} ${str}`;
   }
-}
-class Admin extends User {
-  static role = {
-    BASIC: "basic",
-    SUPERUSER: "superuser",
-  };
-
-  constructor(params) {
-    super(params.email);
-    this.access = params.access;
-    this.blacklistedEmails=params.blacklistedEmails;
+  padStart(str) {
+    return str = str + this.#value;
   }
-  blacklist(email){
-    this.blacklistedEmails.push(email);
-  }
-  isBlacklisted(email){
-   this.blacklistedEmails.some(email); 
+  padBoth(str) {
+    return `${str} this.#value ${str}` ;
   }
 }
 
-const mango = new Admin({
-  email: "mango@mail.com",
-    access: Admin.role.SUPERUSER,
-  blacklistedEmails: [],
-});
 
-console.log(mango.email); // "mango@mail.com"
-console.log(mango.access); // "superuser"
 
-mango.blacklist("poly@mail.com");
-console.log(mango.blacklistedEmails); // ["poly@mail.com"]
-console.log(mango.isBlacklisted("mango@mail.com")); // false
-console.log(mango.isBlacklisted("poly@mail.com")); // true
 
+const builder = new StringBuilder(".");
+console.log(builder.getValue()); // "."
+builder.padStart("^");
+console.log(builder.getValue()); // "^."
+builder.padEnd("^");
+console.log(builder.getValue()); // "^.^"
+builder.padBoth("=");
+console.log(builder.getValue()); // "=^.^="
